@@ -90,16 +90,16 @@ public class SkipListImpl<T> implements SkipList<T> {
 			return 0;
 		}
 		SkipListNode<T> node = this.root;
-		int i = maxHeight;
+		int altura = 0;
 		
-		while (i >= 0) {
-			if (!node.forward[i].equals(NIL)) {
-				node = node.getForward(i);	
-				break;
+		while (!node.getForward(0).equals(NIL)) {
+			if (node.getForward(0).height() > altura) {
+				altura = node.getForward(0).height();	
+				
 			}
-			i--;
+			node = node.getForward(0);
 		}
-		return i;
+		return altura;
 	}
 
 	@Override
@@ -138,6 +138,18 @@ public class SkipListImpl<T> implements SkipList<T> {
 		return size;
 	}
 
+
+	public int recursiveSize() {
+		return recursiveSize(this.root) - 1;
+	}
+
+	private int recursiveSize(SkipListNode<T> node) {
+		if (node.equals(this.NIL)) {
+			return 0;
+		}
+		return 1 + recursiveSize(node.getForward(0));
+	}
+	
 	@Override
 	public SkipListNode<T>[] toArray() {
 		SkipListNode[] result = new SkipListNode[this.size() + 2];
