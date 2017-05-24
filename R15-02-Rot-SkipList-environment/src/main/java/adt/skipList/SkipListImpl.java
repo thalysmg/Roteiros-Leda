@@ -28,57 +28,91 @@ public class SkipListImpl<T> implements SkipList<T> {
 		}
 	}
 
-	
 	@Override
 	public void insert(int key, T newValue, int height) {
-		if (newValue == null) return;
-		
+		if (newValue == null)
+			return;
+
 		SkipListNode<T> newNode = new SkipListNode<T>(key, height, newValue);
 		SkipListNode<T> node = this.root;
 		SkipListNode<T>[] update = new SkipListNode[maxHeight];
-		
-		if (node == null) return;
-		
-		for (int i = maxHeight-1; i >= 0; i--) {
-			while(node.forward[i].key < key) {
-				node = node.forward[i];
+
+		for (int i = maxHeight - 1; i >= 0; i--) {
+			if (node.forward[i] != null) {
+				while (node.forward[i].key < key) {
+					node = node.forward[i];
+				}
 			}
-			update[i] = node;				
+			update[i] = node;
 		}
-		node = node.forward[0];
-		if (node.key == key) 
-			node = newNode;
-		else 
+		node = node.getForward(0);
+		if (node.key == key)
+			node.setValue(newValue);
+		else {
 			node = new SkipListNode<T>(key, height, newValue);
 			for (int i = 0; i < height; i++) {
-				newNode.forward[i] = update[i].forward[i];
-				update[i].forward[i] = newNode;
+				if (update[i] != null) {
+					newNode.forward[i] = update[i].forward[i];
+					update[i].forward[i] = newNode;
+				}
 			}
+		}
 	}
 
 	@Override
 	public void remove(int key) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		SkipListNode<T> node = this.root;
+		SkipListNode<T>[] update = new SkipListNode[maxHeight];
+
+		for (int i = maxHeight - 1; i >= 0; i--) {
+			if (node.forward[i] != null) {
+				while (node.forward[i].key < key) {
+					node = node.getForward(i);
+				}
+			}
+			update[i] = node;
+		}	
+		node = node.getForward(0);
+		if (node.getKey() == key) {
+			for (int i = 0; i < maxHeight ; i++) {
+				if (update[i].getForward(i) != node) {
+					break;
+				}
+				update[i].forward[i] = node.getForward(i);
+			}
+		}
+	
 	}
 
 	@Override
 	public int height() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if (this.size() == 0) {
+			return 0;
+		}
+		SkipListNode<T> node = this.root;
+		int altura = 0;
+		
+		while (!node.getForward(0).equals(NIL)) {
+			if (node.getForward(0).height() > altura) {
+				altura = node.getForward(0).height();	
+				
+			}
+			node = node.getForward(0);
+		}
+		return altura;
 	}
 
 	@Override
 	public SkipListNode<T> search(int key) {
 		SkipListNode<T> node = this.root;
-		
-		for (int i = maxHeight-1; i >= 0; i--) {
-			while(node.forward[i].key < key) {
+
+		for (int i = maxHeight - 1; i >= 0; i--) {
+			while (node.forward[i].key < key) {
 				node = node.forward[i];
 			}
 		}
 		node = node.forward[0];
-		if (node.key == key) 
+		if (node.key == key)
 			return node;
 		return null;
 	}
@@ -86,19 +120,17 @@ public class SkipListImpl<T> implements SkipList<T> {
 	private SkipListNode<T> recursiveSearch(SkipListNode<T> node, int level, int key) {
 		if (node.key == key) {
 			return node;
-		}
-		else if (node.forward[level].key < key) {
+		} else if (node.forward[level].key < key) {
 			return recursiveSearch(node.getForward(level), level--, key);
 		}
 		return null;
 	}
-	
-	
+
 	@Override
 	public int size() {
 		SkipListNode<T> node = this.root.getForward(0);
 		int size = 0;
-		
+
 		while (!node.equals(NIL)) {
 			node = node.getForward(0);
 			size++;
@@ -106,17 +138,39 @@ public class SkipListImpl<T> implements SkipList<T> {
 		return size;
 	}
 
+
+	public int recursiveSize() {
+		return recursiveSize(this.root) - 1;
+	}
+
+	private int recursiveSize(SkipListNode<T> node) {
+		if (node.equals(this.NIL)) {
+			return 0;
+		}
+		return 1 + recursiveSize(node.getForward(0));
+	}
+	
 	@Override
 	public SkipListNode<T>[] toArray() {
-		SkipListNode<T> node = this.root;
-		SkipListNode<T>[] result = new SkipListNode[this.size()];
-		int i = 0;
-		
-		while (!node.getForward(0).equals(NIL)) {
+		SkipListNode[] result = new SkipListNode[this.size() + 2];
+		SkipListNode<T> node = this.root.getForward(0);
+
+		if (this.size() == 0) {
+			result[0] = this.root;
+			result[1] = NIL;
+		}
+
+		result[0] = this.root;
+
+		int i = 1;
+
+		while (!node.equals(NIL)) {
 			result[i] = node;
 			node = node.getForward(0);
 			i++;
-		}	
+		}
+		result[i] = NIL;
+
 		return result;
 	}
 

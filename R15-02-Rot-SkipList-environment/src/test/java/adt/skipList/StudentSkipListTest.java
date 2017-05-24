@@ -100,6 +100,7 @@ public class StudentSkipListTest {
 		assertEquals(null, skip.search(-10));
 		assertEquals(null, skip.search(30));
 		assertEquals(null, skip.search(9));
+		
 	}
 
 	@Test
