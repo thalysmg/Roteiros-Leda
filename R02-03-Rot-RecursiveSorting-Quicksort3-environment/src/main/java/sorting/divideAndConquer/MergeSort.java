@@ -15,9 +15,7 @@ public class MergeSort<T extends Comparable<T>> extends AbstractSorting<T> {
 	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
 		if (leftIndex < rightIndex) {
-			LinkedList<T> list = new LinkedList<>();
 			int middle = (rightIndex + leftIndex) / 2;
-
 			sort(array, leftIndex, middle);
 			sort(array, middle + 1, rightIndex);
 			merge(array, leftIndex, middle, rightIndex);
@@ -32,22 +30,35 @@ public class MergeSort<T extends Comparable<T>> extends AbstractSorting<T> {
 			aux[i] = array[i];
 		}
 
-		int i = leftIndex;
-		int j = middle + 1;
+		int left = leftIndex;
+		int right = middle + 1;
 
 		for (int l = leftIndex; l <= rightIndex; l++) {
-			if (i > middle) {
-				array[l] = aux[j];
-				j++;
-			} else if (j > rightIndex) {
-				array[l] = aux[i];
-				i++;
-			} else if (aux[i].compareTo(aux[j]) > 0) {
-				array[l] = aux[j];
-				j++;
+			if (left > middle) { /*
+									 * checking if all the elements from the
+									 * first part of array "aux" have already
+									 * been put in the actual array
+									 */
+				array[l] = aux[right];
+				right++;
+			} else if (right > rightIndex) { /*
+												 * checking if all the elements
+												 * from the second part of array
+												 * aux have already been put in
+												 * the actual array
+												 */
+				array[l] = aux[left];
+				left++;
+			} else if (aux[left]
+					.compareTo(aux[right]) > 0) { /*
+													 * merging the elements from
+													 * both parts of array (ordering)
+													 */
+				array[l] = aux[right];
+				right++;
 			} else {
-				array[l] = aux[i];
-				i++;
+				array[l] = aux[left];
+				left++;
 			}
 		}
 

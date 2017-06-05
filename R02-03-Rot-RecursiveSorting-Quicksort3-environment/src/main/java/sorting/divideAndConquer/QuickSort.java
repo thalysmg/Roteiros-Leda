@@ -18,9 +18,9 @@ public class QuickSort<T extends Comparable<T>> extends AbstractSorting<T> {
 		if (leftIndex >= rightIndex) {
 			return;
 		}
-		int pivo = partition(array, leftIndex, rightIndex);
-		sort(array, leftIndex, pivo - 1);
-		sort(array, pivo + 1, rightIndex);
+		int pivot = partition(array, leftIndex, rightIndex);
+		sort(array, leftIndex, pivot - 1);
+		sort(array, pivot + 1, rightIndex);
 	}
 
 	
