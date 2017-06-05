@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-06-02T16:12:52.790-0300</date>
+  <logger>THALYS MENEZES CUNHA GADELHA</logger>
+  <level>FINE</level>
+  <message>File 115210271-THALYS MENEZES CUNHA GADELHA.zip was received. It was sent by THALYS MENEZES CUNHA GADELHA from IP 127.0.1.1</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-06-05T12:58:58.527-0300</date>
+  <logger>THALYS MENEZES CUNHA GADELHA</logger>
+  <level>FINE</level>
+  <message>File 115210271-THALYS MENEZES CUNHA GADELHA.zip was received. It was sent by THALYS MENEZES CUNHA GADELHA from IP 127.0.1.1</message>
+</record>
