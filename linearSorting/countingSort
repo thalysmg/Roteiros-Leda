@@ -1,0 +1,40 @@
+@Override
+public void sort(Integer[] array, int leftIndex, int rightIndex) {
+  	int tamanho = array.length;
+  	boolean condicao = false;
+  
+ 	for (Integer elem : array) {
+  		if (elem < 0) {
+  			condicao = true;
+  		}
+  	}
+  
+  	if (leftIndex >= 0 && leftIndex <= tamanho && rightIndex <= tamanho - 1
+  		&& rightIndex > 0 && tamanho > 1 && leftIndex < rightIndex
+  		&& condicao == false) {
+  
+  		int maior = getMaior(array);
+  		int[] auxiliar = new int[maior+1];
+  		int[] resposta = new int[array.length];
+  		
+  			
+  		for (int i = leftIndex; i <= rightIndex; i++) {
+  			auxiliar[array[i]] ++;
+  		}
+  
+  		for (int i = 1; i < auxiliar.length; i++) {
+  			auxiliar[i] += auxiliar[i - 1];
+  		}
+  			
+  		for (int i = rightIndex; i >= leftIndex; i--) {
+  			resposta[auxiliar[array[i]] - 1] = array[i];
+  			auxiliar[array[i]] -= 1;
+  		}
+  			
+  		int valor = rightIndex - leftIndex;
+  			
+  		for (int i = 0; i <= valor; i++) {
+  			array[leftIndex + i] = resposta[i];
+  		}
+  	} 
+}
