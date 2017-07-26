@@ -192,14 +192,13 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 	}
 
 	private void remove(BSTNode<T> node) {
-
-		if (!node.getLeft().isEmpty() && !node.getRight().isEmpty()) { // node
-																		// has 2
-																		// children
-
+		//node has 2 children
+		if (!node.getLeft().isEmpty() && !node.getRight().isEmpty()) {
 			BSTNode<T> newNode = sucessor(node.getData());
 			node.setData(newNode.getData());
 			remove(newNode);
+			
+			//node has only one kid
 		} else {
 			BSTNode<T> newNode = (BSTNode<T>) node.getLeft();
 
