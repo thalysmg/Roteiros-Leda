@@ -1,4 +1,3 @@
-
 package adt.bst;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 
 	}
 
-	private int recursiveHeight(BSTNode<T> node, int height) {
+	protected int recursiveHeight(BSTNode<T> node, int height) {
 		if (!node.isEmpty()) {
 			int rightHeight = recursiveHeight((BSTNode<T>) node.getRight(), height + 1);
 			int leftHeight = recursiveHeight((BSTNode<T>) node.getLeft(), height + 1);
