@@ -1,4 +1,3 @@
-
 package adt.bst;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 
 	}
 
-	private int recursiveHeight(BSTNode<T> node, int height) {
+	protected int recursiveHeight(BSTNode<T> node, int height) {
 		if (!node.isEmpty()) {
 			int rightHeight = recursiveHeight((BSTNode<T>) node.getRight(), height + 1);
 			int leftHeight = recursiveHeight((BSTNode<T>) node.getLeft(), height + 1);
@@ -224,7 +223,7 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 	 * @param list
 	 * @param node
 	 */
-	protected void visit(List<T> list, BSTNode<T> node) {
+	private void visit(List<T> list, BSTNode<T> node) {
 		list.add(node.getData());
 	}
 
@@ -281,7 +280,7 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 		}
 	}
 
-	protected T[] makeArray(T[] array, List<T> list) {
+	private T[] makeArray(T[] array, List<T> list) {
 		for (int i = 0; i < list.size(); i++) {
 			array[i] = list.get(i);
 		}
