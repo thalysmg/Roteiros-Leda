@@ -33,13 +33,13 @@ public class MergeSort<T extends Comparable<T>> extends AbstractSorting<T> {
 		int left = leftIndex;
 		int right = middle + 1;
 
-		for (int l = leftIndex; l <= rightIndex; l++) {
+		for (int k = leftIndex; k <= rightIndex; k++) {
 			if (left > middle) { /*
 									 * checking if all the elements from the
 									 * first part of array "aux" have already
 									 * been put in the actual array
 									 */
-				array[l] = aux[right];
+				array[k] = aux[right];
 				right++;
 			} else if (right > rightIndex) { /*
 												 * checking if all the elements
@@ -47,17 +47,17 @@ public class MergeSort<T extends Comparable<T>> extends AbstractSorting<T> {
 												 * aux have already been put in
 												 * the actual array
 												 */
-				array[l] = aux[left];
+				array[k] = aux[left];
 				left++;
 			} else if (aux[left]
 					.compareTo(aux[right]) > 0) { /*
 													 * merging the elements from
 													 * both parts of array (ordering)
 													 */
-				array[l] = aux[right];
+				array[k] = aux[right];
 				right++;
 			} else {
-				array[l] = aux[left];
+				array[k] = aux[left];
 				left++;
 			}
 		}

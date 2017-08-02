@@ -29,23 +29,21 @@ public class QuickSort<T extends Comparable<T>> extends AbstractSorting<T> {
 	 * right side and all the minors on it's left side, and return the index of
 	 *  the pivot. 
 	 */
-	private int partition(T[] array, int left, int right) {
-		int i = left + 1;
-		int j = right;
-		T pivot = array[left];
+	private int partition(T[] array, int leftIndex, int rightIndex) {
+		int left = leftIndex + 1;
+		int right = rightIndex;
+		T pivot = array[leftIndex];
 
-		while (i <= j) {
-			if (array[i].compareTo(pivot) <= 0) {
-				i++;
-			} else if (array[j].compareTo(pivot) > 0) {
-				j--;
+		while (left <= right) {
+			if (array[left].compareTo(pivot) <= 0) {
+				left++;
+			} else if (array[right].compareTo(pivot) > 0) {
+				right--;
 			} else {
-				Util.swap(array, i, j);
+				Util.swap(array, left, right);
 			}
 		}
-		Util.swap(array, left, j);
-		return j;
-
+		Util.swap(array, leftIndex, right);
+		return right;
 	}
-
 }

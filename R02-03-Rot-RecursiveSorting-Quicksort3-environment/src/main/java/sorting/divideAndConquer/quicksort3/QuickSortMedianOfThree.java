@@ -19,38 +19,59 @@ import util.Util;
 
 public class QuickSortMedianOfThree<T extends Comparable<T>> extends AbstractSorting<T> {
 
-	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
-		int tamanho = array.length;
-
-		if (leftIndex >= 0 && rightIndex >= 0 && rightIndex < tamanho && tamanho > 1 && leftIndex < rightIndex
-				&& leftIndex < tamanho) {
-			int m = partition(array, leftIndex, rightIndex);
-			sort(array, leftIndex, m - 1);
-			sort(array, m + 1, rightIndex);
-
+		if (leftIndex < 0) {
+			leftIndex = 0;
 		}
-
+		if (rightIndex > array.length - 1) {
+			rightIndex = array.length - 1;
+		}
+		if (!(array == null && leftIndex > rightIndex)) {
+			quickSortMedianOfThree(array, leftIndex, rightIndex);
+		}
 	}
 
-	private int partition(T[] array, int leftIndex, int rightIndex) {
-		int i = leftIndex + 1;
-		int j = rightIndex;
-		T p = array[leftIndex];
+	private void quickSortMedianOfThree(T[] array, int leftIndex, int rightIndex) {
+		if (leftIndex < rightIndex) {
+			medianOfThree(array, leftIndex, rightIndex);
+			int positionPivot = particiona(array, leftIndex, rightIndex);
+			sort(array, leftIndex, positionPivot - 1);
+			sort(array, positionPivot + 1, rightIndex);
+		}
+	}
 
-		while (i <= j) {
-			if (array[i].compareTo(p) <= 0) {
-				i++;
-			} else if (array[j].compareTo(p) > 0) {
-				j--;
+	private int particiona(T[] array, int leftIndex, int rightIndex) {
+		T pivot = array[leftIndex];
+		int left = leftIndex + 1;
+		int right = rightIndex;
 
+		while (left <= right) {
+			if (array[left].compareTo(pivot) <= 0) {
+				left++;
+			} else if (array[right].compareTo(pivot) > 0) {
+				right--;
 			} else {
-				Util.swap(array, i, j);
+				Util.swap(array, left, right);
 			}
 		}
-		Util.swap(array, leftIndex, j);
+		Util.swap(array, leftIndex, right);
+		return right;
+	}
 
-		return j;
+	private void medianOfThree(T[] array, int leftIndex, int rightIndex) {
+		int average = (leftIndex + rightIndex) / 2;
+		if (array[leftIndex].compareTo(array[average]) > 0) {
+			Util.swap(array, leftIndex, average);
+		}
 
+		if (array[average].compareTo(array[rightIndex]) > 0) {
+			Util.swap(array, rightIndex, average);
+		}
+
+		if (array[leftIndex].compareTo(array[rightIndex]) > 0) {
+			Util.swap(array, leftIndex, rightIndex);
+
+		}
+		Util.swap(array, average, rightIndex - 1);
 	}
 }
