@@ -15,7 +15,7 @@ public class QueueDoubleLinkedListImpl<T> implements Queue<T> {
 
    @Override
    public void enqueue(T element) throws QueueOverflowException {
-      if (list.size() == size) {
+      if (this.isFull()) {
          throw new QueueOverflowException();
       }
       list.insert(element);
@@ -23,7 +23,7 @@ public class QueueDoubleLinkedListImpl<T> implements Queue<T> {
 
    @Override
    public T dequeue() throws QueueUnderflowException {
-      if (list.isEmpty()) {
+      if (this.isEmpty()) {
          throw new QueueUnderflowException();
       }
       T dequeued = this.list.toArray()[0];

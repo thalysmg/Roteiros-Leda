@@ -18,12 +18,12 @@ public class StackDoubleLinkedListImpl<T> implements Stack<T> {
 		if (this.isFull()) {
 			throw new StackOverflowException();
 		}
-		this.top.insertFirst(element);
+		this.top.insert(element);
 	}
 
 	@Override
 	public T pop() throws StackUnderflowException {
-		if (this.top.isEmpty()) {
+		if (this.isEmpty()) {
 			throw new StackUnderflowException();
 		}
 		T popped = this.top.toArray()[size-1];
